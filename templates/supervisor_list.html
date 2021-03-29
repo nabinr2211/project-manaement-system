@@ -1,0 +1,82 @@
+{%extends 'base.html'%}
+{%block content%}
+{% include 'navbar.html'%}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
+                            <li><a href="#">Supervisor</a></li>
+                            <li class="active">Supervisor list</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Supervisors List</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Position</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for supervisor in supervisors %}
+                            <tr>
+                                <td>{{supervisor.name}}</td>
+                                <td>{{supervisor.email}}</td>
+                                <td>{{supervisor.phone}}</td>
+                                <td>{{supervisor.position}}</td>
+                                  <td>
+                                    <a href="{% url 'projects:edit_supervisor' id=supervisor.id%}">
+                                        <i class="fa fa-edit mx-2"></i>Edit
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'projects:delete_supervisor' id=supervisor.id %}">
+                                        <i class="fa fa-trash-o mx-2"></i>Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor%}
+
+                            </tbody>
+                        </table>
+                        <a href="{% url 'projects:add_supervisor'%}">
+                            <button id="" type="submit" class="btn btn-lg btn-info btn-block">
+                                <i class="fa fa-plus"></i>&nbsp;
+                                <span>Add Program</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+<div class="clearfix"></div>
+{% endblock%}

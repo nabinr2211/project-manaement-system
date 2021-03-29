@@ -1,0 +1,80 @@
+{%extends 'base.html'%}
+{%block content%}
+{% include 'navbar.html'%}
+
+
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
+                            <li><a href="#">Task</a></li>
+                            <li class="active">Task list</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-10 offset-1">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Task List</strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Member</th>
+                                <th>Image</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for task in task %}
+                            <tr>
+                                <td>{{task.title}}</td>
+                                <td>{{task.member}}</td>
+                                <td>
+                                      <img src="{{task.image.url}}" class="img-fluid my-1 rounded-circle menu_image shadow-sm"
+                                 alt="Image"" width="80" height="80"></td>
+                                                            </tr>
+                            {% endfor%}
+
+                            </tbody>
+                        </table>
+                        <a href="{% url 'projects:add_task'%}">
+                            <button id="" type="submit" class="btn btn-lg btn-info btn-block">
+                                <i class="fa fa-plus"></i>&nbsp;
+                                <span>Add Task </span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div><!-- .animated -->
+</div><!-- .content -->
+
+
+<div class="clearfix"></div>
+
+
+{% endblock%}
