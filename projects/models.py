@@ -6,7 +6,7 @@ from phone_field import PhoneField
 
 
 class Program(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
@@ -14,12 +14,19 @@ class Program(models.Model):
 
 class Supervisor(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField()
-    phone = PhoneField()
+    email = models.EmailField(unique=True)
+    phone = PhoneField(unique=True)
     position = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=200)
+    is_complete=models.BooleanField(default=False)
+    def __str__(self):
+        return self.title
 
 
 class Member(models.Model):
@@ -33,33 +40,26 @@ class Member(models.Model):
         ('7th Sem', '7th sem'),
         ('8th Sem', '8th sem'),
     )
-    symbol_no = models.CharField(max_length=20)
+    symbol_no = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=100)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone = PhoneField()
     semester = models.CharField(max_length=100, choices=semester)
+    task = models.ManyToManyField(Task)
 
     def __str__(self):
         return self.name
 
 
-class Task(models.Model):
-    title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='project img')
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
-
-
 class Project(models.Model):
     title = models.CharField(max_length=100)
-    start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField(auto_now_add=False)
-    task = models.ManyToManyField(Task)
+    description = models.TextField(max_length=500,null=True)
+    start_date = models.DateField(auto_now_add=False)
+    end_date = models.DateField(auto_now_add=False)
+    # task = models.ManyToManyField(Task)
     member = models.ManyToManyField(Member)
-    supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+    supervisor = models.ManyToManyField(Supervisor)
 
     def __str__(self):
         return self.title

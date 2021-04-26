@@ -27,3 +27,6 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = "Project Management System"

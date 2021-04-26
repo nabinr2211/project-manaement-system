@@ -8,6 +8,10 @@ class AddProgramModelsForm(forms.ModelForm):
         fields = '__all__'
 
 
+
+
+
+
 class EditProgramModelsForm(forms.ModelForm):
     class Meta:
         model = Program
@@ -42,3 +46,28 @@ class AddTaskModelsForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = '__all__'
+
+
+class EditTaskModelsForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+
+class AddProjectModelsForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+        # widget=forms.TextInput(attrs={'class':"start_date",'placeholder':"mm/dd/yyyy"})
+
+
+class EditProjectModelsForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+

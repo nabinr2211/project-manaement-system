@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from projects.models import Program, Member
+from projects.models import Program, Member, Supervisor, Task, Project
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -19,4 +19,34 @@ class MemberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Member
+        fields = '__all__'
+
+
+class SupervisorSerializer(serializers.ModelSerializer):
+    """
+    serializer class for the supervisor
+    """
+
+    class Meta:
+        model = Supervisor
+        fields = '__all__'
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    """
+    serializer class for the supervisor
+    """
+
+    class Meta:
+        model = Task
+        fields = '__all__'
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    """
+    serializer class for the supervisor
+    """
+
+    class Meta:
+        model = Project
         fields = '__all__'

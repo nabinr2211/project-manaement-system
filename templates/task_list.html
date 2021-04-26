@@ -41,18 +41,24 @@
                             <thead>
                             <tr>
                                 <th>Title</th>
-                                <th>Member</th>
-                                <th>Image</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for task in task %}
                             <tr>
                                 <td>{{task.title}}</td>
-                                <td>{{task.member}}</td>
+                                <td> <a href="{% url 'projects:edit_task' id=task.id%}">
+                                        <i class="fa fa-edit mx-2"></i>Edit
+                                    </a></td>
                                 <td>
-                                      <img src="{{task.image.url}}" class="img-fluid my-1 rounded-circle menu_image shadow-sm"
-                                 alt="Image"" width="80" height="80"></td>
+                                     <a href="{% url 'projects:delete_task' id=task.id %}">
+                                        <i class="fa fa-trash-o mx-2"></i>Delete</a>
+
+<!--                                      <img src="{{task.image.url}}" class="img-fluid my-1 rounded-circle menu_image shadow-sm"-->
+<!--                                 alt="Image"" width="80" height="80">-->
+                                </td>
                                                             </tr>
                             {% endfor%}
 

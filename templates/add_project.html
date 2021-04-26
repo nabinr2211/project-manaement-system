@@ -3,6 +3,7 @@
 {% block content %}
 {% include 'navbar.html'%}
 
+
 <!-- breadcrumbs start...-->
 
 <div class="breadcrumbs ">
@@ -20,8 +21,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
-                            <li><a href="#">Member</a></li>
-                            <li class="active">Add Member</li>
+                            <li><a href="#">Project</a></li>
+                            <li class="active">Add Project</li>
                         </ol>
                     </div>
                 </div>
@@ -38,32 +39,37 @@
             <div class="col-lg-6 offset-3 mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Member</strong>
+                        <strong class="card-title">Project</strong>
                     </div>
                     <div class="card-body">
-                        <!-- Add Member -->
-                        <div id="">
+
+                        <div >
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h3 class="text-center">Add Member</h3>
+                                    <h3 class="text-center">Add Projects</h3>
                                 </div>
                                 <hr>
                                 <form action="" method="post" novalidate="novalidate">
+
                                     {% csrf_token %}
-                                    {{ member_form|crispy}}
-<!--                                    {{ tasks_form|crispy}}-->
+                                    {{ project_form|crispy}}
+
                                     <div>
                                         <button  type="submit" class="btn btn-lg btn-info btn-block">
                                             <i class="fa fa-save"></i>&nbsp;
-                                            <span>Save</span>
+                                            <span >Save</span>
                                         </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div> <!-- .card -->
+
             </div><!--/.col-->
+
+
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->

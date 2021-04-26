@@ -5,8 +5,8 @@
 
 <!-- breadcrumbs start...-->
 
-<div class="breadcrumbs ">
-    <div class="breadcrumbs-inner shadow-sm mx-3">
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
         <div class="row m-0">
             <div class="col-sm-4">
                 <div class="page-header float-left">
@@ -16,12 +16,12 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <div class="page-header float-right ">
+                <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
-                            <li><a href="#">Member</a></li>
-                            <li class="active">Add Member</li>
+                            <li><a href="#">Project</a></li>
+                            <li class="active">Delete Project</li>
                         </ol>
                     </div>
                 </div>
@@ -38,34 +38,42 @@
             <div class="col-lg-6 offset-3 mt-5">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Member</strong>
+                        <strong class="card-title">Project</strong>
                     </div>
                     <div class="card-body">
-                        <!-- Add Member -->
-                        <div id="">
+                        <!-- delete Project-->
+                        <div>
                             <div class="card-body">
                                 <div class="card-title">
-                                    <h3 class="text-center">Add Member</h3>
+                                    <h3 class="text-center">Delete "{{delete_projects}}" Project</h3>
                                 </div>
                                 <hr>
-                                <form action="" method="post" novalidate="novalidate">
+                                <form action="{% url 'projects:delete_project' id=delete_projects.id %}" method="post"
+                                      novalidate="novalidate">
                                     {% csrf_token %}
-                                    {{ member_form|crispy}}
-<!--                                    {{ tasks_form|crispy}}-->
                                     <div>
-                                        <button  type="submit" class="btn btn-lg btn-info btn-block">
-                                            <i class="fa fa-save"></i>&nbsp;
-                                            <span>Save</span>
+                                        <button class="btn btn-lg btn-info btn-block">
+                                            <span>DELETE</span>
                                         </button>
                                     </div>
                                 </form>
+                                <div class="mt-3">
+                                    <a href="{% url 'projects:project_list'%}">
+                                        <button class="btn btn-lg btn-info btn-block">
+                                            <span>Cancel</span>
+                                        </button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div> <!-- .card -->
+
             </div><!--/.col-->
+
+
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->
-
 {% endblock %}
