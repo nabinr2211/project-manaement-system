@@ -28,7 +28,7 @@ urlpatterns = [
     path('project-list/', views.project_list, name='project_list'),
     path('edit-project/<int:id>', views.edit_project, name="edit_project"),
     path('delete-project/<int:id>', views.delete_project, name="delete_project"),
-    path('project/<int:pk>', views.ProjectDetails.as_view(), name='project_details'),
+    path('project-detail/<int:pk>', views.ProjectDetails.as_view(), name='project_details'),
 
     path('user/login/', views.user_login, name='user_login'),
     path('user/logout/', views.user_logout, name='user_logout'),

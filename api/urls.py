@@ -9,6 +9,7 @@ urlpatterns = [
     # path('program-detail/<str:pk>/',views.program_detail_api,name='api_program_detail'),
     path('add-program/', views.program_add_api, name='api_program_add'),
     path('update-program/<str:pk>/', views.program_update_api, name='api_program_update'),
+    path('delete-program/<str:pk>/', views.delete_program_api, name='delete_program_api'),
 
     # urls for members...
     path('add-member/', views.member_add_api, name='api_member_add'),

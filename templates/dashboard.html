@@ -16,8 +16,27 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text">$<span class="count">23569</span></div>
-                                    <div class="stat-heading">Revenue</div>
+                                    <div class="stat-text"><span class="count">{{total_program}}</span></div>
+                                    <div class="stat-heading">Total Programs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="stat-widget-five">
+                            <div class="stat-icon dib flat-color-3">
+                                <i class="pe-7s-browser"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="text-left dib">
+                                    <div class="stat-text"><span class="count">{{total_project}}</span></div>
+                                    <div class="stat-heading">Total Projects</div>
                                 </div>
                             </div>
                         </div>
@@ -34,26 +53,8 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">3435</span></div>
-                                    <div class="stat-heading">Sales</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="stat-widget-five">
-                            <div class="stat-icon dib flat-color-3">
-                                <i class="pe-7s-browser"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">349</span></div>
-                                    <div class="stat-heading">Templates</div>
+                                    <div class="stat-text"><span class="count">{{total_supervisor}}</span></div>
+                                    <div class="stat-heading">Supervisor</div>
                                 </div>
                             </div>
                         </div>
@@ -70,8 +71,8 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text"><span class="count">2986</span></div>
-                                    <div class="stat-heading">Clients</div>
+                                    <div class="stat-text"><span class="count">{{total_member}}</span></div>
+                                    <div class="stat-heading">Total Members</div>
                                 </div>
                             </div>
                         </div>
@@ -85,51 +86,31 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="box-title">Traffic </h4>
+                        <h4 class="box-title">Program List </h4>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="card-body">
-                                <!-- <canvas id="TrafficChart"></canvas>   -->
-                                <div id="traffic-chart" class="traffic-chart"></div>
+                    <div class="row mx-3">
+
+
+                        {% for program in programs%}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="card shadow border">
+                                <div class="card-body">
+                                    <div class="stat-widget-five">
+                                        <div class="stat-icon dib flat-color-1">
+                                            <i class="pe-7s-cash"></i>
+                                        </div>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <h4 class="text-dark ml-3">{{program.name}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card-body">
-                                <div class="progress-box progress-1">
-                                    <h4 class="por-title">Visits</h4>
-                                    <div class="por-txt">96,930 Users (40%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Bounce Rate</h4>
-                                    <div class="por-txt">3,220 Users (24%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 24%;"
-                                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Unique Visitors</h4>
-                                    <div class="por-txt">29,658 Users (60%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="progress-box progress-2">
-                                    <h4 class="por-title">Targeted Visitors</h4>
-                                    <div class="por-txt">99,658 Users (90%)</div>
-                                    <div class="progress mb-2" style="height: 5px;">
-                                        <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 90%;"
-                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div> <!-- /.card-body -->
-                        </div>
+                        {%endfor%}
+
+
                     </div> <!-- /.row -->
                     <div class="card-body"></div>
                 </div>
@@ -151,10 +132,11 @@
                                     <thead>
                                     <tr>
                                         <th> Project Name</th>
-                                        <th>Team Member</th>
-                                        <th>Task</th>
+
+
                                         <th>Starting Date</th>
                                         <th>Ending Date</th>
+                                        <th>Team Member</th>
                                         <th>Supervisor</th>
 
                                     </tr>
@@ -164,19 +146,21 @@
                                     <tr>
 
 
-                                        <td>{{project.title}}</td>
-                                        <td>{% for project in project.member.all%}
-                                        {{project.name}}<br>
-                                            {%endfor%}
-                                        <td>{% for project in project.task.all%}
-                                        {{project.title}}<br>
-                                            {%endfor%}
-                                        </td>
+                                        <td> <a href="{% url 'projects:project_details' pk=project.id %}">{{project.title}}</a></td>
+
                                         <td>{{project.start_date|date}}</td>
                                         <td>{{project.end_date|date}}</td>
+                                        <td>{%for member in project.member.all%}
+                                            - {{member|capfirst}}<br>
+                                            {% endfor%}
 
+                                        </td>
 
-                                        <td>{{project.supervisor}}</td>
+                                        <td>
+                                            {%for supervisor in project.supervisor.all%}
+                                            - {{supervisor|capfirst}}<br>
+                                            {% endfor%}
+                                        </td>
 
 
                                     </tr>
@@ -188,30 +172,30 @@
                     </div> <!-- /.card -->
                 </div>  <!-- /.col-lg-8 -->
 
-<!--                <div class="col-xl-4">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-6 col-xl-12">-->
-<!--                            <div class="card br-0">-->
-<!--                                <div class="card-body">-->
-<!--                                    <div class="chart-container ov-h">-->
-<!--                                        <div id="flotPie1" class="float-chart"></div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>&lt;!&ndash; /.card &ndash;&gt;-->
-<!--                        </div>-->
+                <!--                <div class="col-xl-4">-->
+                <!--                    <div class="row">-->
+                <!--                        <div class="col-lg-6 col-xl-12">-->
+                <!--                            <div class="card br-0">-->
+                <!--                                <div class="card-body">-->
+                <!--                                    <div class="chart-container ov-h">-->
+                <!--                                        <div id="flotPie1" class="float-chart"></div>-->
+                <!--                                    </div>-->
+                <!--                                </div>-->
+                <!--                            </div>&lt;!&ndash; /.card &ndash;&gt;-->
+                <!--                        </div>-->
 
-<!--                        <div class="col-lg-6 col-xl-12">-->
-<!--                            <div class="card bg-flat-color-3  ">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h4 class="card-title m-0  white-color ">August 2018</h4>-->
-<!--                                </div>-->
-<!--                                <div class="card-body">-->
-<!--                                    <div id="flotLine5" class="flot-line"></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div> &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
+                <!--                        <div class="col-lg-6 col-xl-12">-->
+                <!--                            <div class="card bg-flat-color-3  ">-->
+                <!--                                <div class="card-body">-->
+                <!--                                    <h4 class="card-title m-0  white-color ">August 2018</h4>-->
+                <!--                                </div>-->
+                <!--                                <div class="card-body">-->
+                <!--                                    <div id="flotLine5" class="flot-line"></div>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div> &lt;!&ndash; /.col-md-4 &ndash;&gt;-->
             </div>
         </div>
         <!-- /.orders -->

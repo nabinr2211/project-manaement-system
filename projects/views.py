@@ -14,7 +14,14 @@ from django.contrib.auth import authenticate, login, logout
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def dashboard(request):
     projects = Project.objects.all()
-    return render(request, 'dashboard.html', {'projects': projects})
+    totalMember = Member.objects.all().count()
+    totalProjects = Project.objects.all().count()
+    totalPrograms = Program.objects.all().count()
+    totalSupervisor=Supervisor.objects.all().count()
+    programs=Program.objects.all()
+    return render(request, 'dashboard.html',
+                  {'projects': projects, 'total_member': totalMember, 'total_project': totalProjects,
+                   'total_program': totalPrograms, 'total_supervisor':totalSupervisor,'programs':programs})
 
 
 # views for add program example:BCA, BBA, BE computer....
@@ -22,14 +29,14 @@ def dashboard(request):
 def add_program(request):
     if request.method == "GET":
         ProgramForm = AddProgramModelsForm()
-        return render(request, 'add_program.html', {'program_form': ProgramForm})
+        return render(request, 'program/add_program.html', {'program_form': ProgramForm})
     elif request.method == "POST":
         form = AddProgramModelsForm(request.POST)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 'Your Prrogram has been created!!!')
         else:
-            return render(request, 'add_program.html', {'program_form': form})
+            return render(request, 'program/add_program.html', {'program_form': form})
         return redirect('projects:program_list')
     return redirect('dashboard')
 
@@ -38,22 +45,24 @@ def add_program(request):
 views for the program list 
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def program_list(request):
     programs = Program.objects.all()
-    return render(request, 'program_list.html', {'programs': programs})
+    return render(request, 'program/program_list.html', {'programs': programs})
 
 
 """ 
 .....views for the edit program.....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def edit_program(request, id):
     edit = Program.objects.get(id=id)
     if request.method == "GET":
         editProgram = EditProgramModelsForm(instance=edit)
-        return render(request, 'edit_program.html', {'edit_program': editProgram})
+        return render(request, 'program/edit_program.html', {'edit_program': editProgram})
     elif request.method == "POST":
         edit_program = EditProgramModelsForm(request.POST, instance=edit)
         if edit_program.is_valid():
@@ -67,13 +76,14 @@ def edit_program(request, id):
 ....views for delete program....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def delete_program(request, id):
     deleteProgram = Program.objects.get(id=id)
     if request.method == "POST":
         deleteProgram.delete()
         return redirect('projects:program_list')
-    return render(request, 'delete_program.html', {'deleteProgram': deleteProgram})
+    return render(request, 'program/delete_program.html', {'deleteProgram': deleteProgram})
 
 
 """
@@ -81,20 +91,21 @@ views for add member ...
 
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def add_member(request):
     if request.method == "GET":
         MemberForm = AddMemberModelsForm()
         # tasks = AddTaskModelsForm()
-        return render(request, 'add_member.html', {'member_form': MemberForm})#,'tasks_form':tasks
+        return render(request, 'member/add_member.html', {'member_form': MemberForm})  # ,'tasks_form':tasks
     elif request.method == "POST":
         form = AddMemberModelsForm(request.POST)
-        #task = AddTaskModelsForm(request.POST)
-        if form.is_valid():# and task.is_valid():
+
+        if form.is_valid():
             form.save()
             # task.save()
         else:
-            return render(request, 'add_member.html', {'member_form': form})#,'tasks_form':task
+            return render(request, 'member/add_member.html', {'member_form': form})  # ,'tasks_form':task
         return redirect('projects:member_list')
     return redirect('dashboard')
 
@@ -103,22 +114,24 @@ def add_member(request):
 views for the  members list
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def member_list(request):
     members = Member.objects.all()
-    return render(request, 'member_list.html', {'members': members})
+    return render(request, 'member/member_list.html', {'members': members})
 
 
 """ 
 .....views for the edit program.....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def edit_member(request, id):
     edit = Member.objects.get(id=id)
     if request.method == "GET":
         editMember = EditMemberModelsForm(instance=edit)
-        return render(request, 'edit_member.html', {'edit_member': editMember})
+        return render(request, 'member/edit_member.html', {'edit_member': editMember})
     elif request.method == "POST":
         edit_member = EditMemberModelsForm(request.POST, instance=edit)
         if edit_member.is_valid():
@@ -132,13 +145,14 @@ def edit_member(request, id):
 ....views for delete program....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def delete_member(request, id):
     deleteMember = Member.objects.get(id=id)
     if request.method == "POST":
         deleteMember.delete()
         return redirect('projects:member_list')
-    return render(request, 'delete_member.html', {'deleteMember': deleteMember})
+    return render(request, 'member/delete_member.html', {'deleteMember': deleteMember})
 
 
 """
@@ -146,17 +160,18 @@ views for add member ...
 
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def add_supervisor(request):
     if request.method == "GET":
         SupervisorForm = AddSupervisorModelsForm()
-        return render(request, 'add_supervisor.html', {'supervisor_form': SupervisorForm})
+        return render(request, 'supervisor/add_supervisor.html', {'supervisor_form': SupervisorForm})
     elif request.method == "POST":
         form = AddSupervisorModelsForm(request.POST)
         if form.is_valid():
             form.save()
         else:
-            return render(request, 'add_supervisor.html', {'supervisor_form': form})
+            return render(request, 'supervisor/add_supervisor.html', {'supervisor_form': form})
         return redirect('projects:supervisor_list')
     return redirect('dashboard')
 
@@ -165,22 +180,24 @@ def add_supervisor(request):
 views for the  members list
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def supervisor_list(request):
     supervisors = Supervisor.objects.all()
-    return render(request, 'supervisor_list.html', {'supervisors': supervisors})
+    return render(request, 'supervisor/supervisor_list.html', {'supervisors': supervisors})
 
 
 """
 .....views for the edit supervisor.....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def edit_supervisor(request, id):
     edit = Supervisor.objects.get(id=id)
     if request.method == "GET":
         editSupervisor = EditSupervisorModelsForm(instance=edit)
-        return render(request, 'edit_supervisor.html', {'edit_supervisor': editSupervisor})
+        return render(request, 'supervisor/edit_supervisor.html', {'edit_supervisor': editSupervisor})
     elif request.method == "POST":
         edit_supervisor = EditSupervisorModelsForm(request.POST, instance=edit)
         if edit_supervisor.is_valid():
@@ -194,30 +211,32 @@ def edit_supervisor(request, id):
 ....views for delete supervisor....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def delete_supervisor(request, id):
     deleteSupervisor = Supervisor.objects.get(id=id)
     if request.method == "POST":
         deleteSupervisor.delete()
         return redirect('projects:supervisor_list')
-    return render(request, 'delete_supervisor.html', {'delete_supervisor': deleteSupervisor})
+    return render(request, 'supervisor/delete_supervisor.html', {'delete_supervisor': deleteSupervisor})
 
 
 """
 views for add task ...
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def add_task(request):
     if request.method == "GET":
         TaskForm = AddTaskModelsForm()
-        return render(request, 'add_task.html', {'task_form': TaskForm})
+        return render(request, 'task/add_task.html', {'task_form': TaskForm})
     elif request.method == "POST":
         form = AddTaskModelsForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
         else:
-            return render(request, 'add_task.html', {'task_form': form})
+            return render(request, 'task/add_task.html', {'task_form': form})
         return redirect('projects:task_list')
     return redirect('projects:task_list')
 
@@ -226,22 +245,24 @@ def add_task(request):
 views for the  task list
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def task_list(request):
     task = Task.objects.all()
-    return render(request, 'task_list.html', {'task': task})
+    return render(request, 'task/task_list.html', {'task': task})
 
 
 """
 .....views for the edit task.....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def edit_task(request, id):
     edit = Task.objects.get(id=id)
     if request.method == "GET":
         editTask = EditTaskModelsForm(instance=edit)
-        return render(request, 'edit_task.html', {'edit_task': editTask})
+        return render(request, 'task/edit_task.html', {'edit_task': editTask})
     elif request.method == "POST":
         edit_task = EditTaskModelsForm(request.POST, instance=edit)
         if edit_task.is_valid():
@@ -255,26 +276,27 @@ def edit_task(request, id):
 ....views for delete task....
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def delete_task(request, id):
     deleteTask = Task.objects.get(id=id)
     if request.method == "POST":
         deleteTask.delete()
         return redirect('projects:task_list')
-    return render(request, 'delete_task.html', {'delete_task': deleteTask})
-
+    return render(request, 'task/delete_task.html', {'delete_task': deleteTask})
 
 
 """
-views for add Program ...
+views for add Projects ...
 """
+
 
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def add_project(request):
     if request.method == "GET":
         ProjectForm = AddProjectModelsForm()
 
-        return render(request, 'add_project.html', {'project_form': ProjectForm})
+        return render(request, 'projects/add_project.html', {'project_form': ProjectForm})
     elif request.method == "POST":
         form = AddProjectModelsForm(request.POST)
 
@@ -282,7 +304,7 @@ def add_project(request):
             form.save()
 
         else:
-            return render(request, 'add_project.html', {'project_form': form})
+            return render(request, 'projects/add_project.html', {'project_form': form})
         return redirect('projects:project_list')
     return redirect('projects:project_list')
 
@@ -291,21 +313,24 @@ def add_project(request):
 views for the  task list
 """
 
+
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def project_list(request):
     projects = Project.objects.all()
-    return render(request, 'project_list.html', {'projects': projects})
+    return render(request, 'projects/project_list.html', {'projects': projects})
+
 
 """
 .....views for the edit task.....
 """
+
 
 @login_required(login_url=reverse_lazy('projects:user_login'))
 def edit_project(request, id):
     edit = Project.objects.get(id=id)
     if request.method == "GET":
         editProject = EditProjectModelsForm(instance=edit)
-        return render(request, 'edit_project.html', {'edit_project': editProject})
+        return render(request, 'projects/edit_project.html', {'edit_project': editProject})
     elif request.method == "POST":
         edit_project = EditProjectModelsForm(request.POST, instance=edit)
         if edit_project.is_valid():
@@ -325,13 +350,14 @@ def delete_project(request, id):
     if request.method == "POST":
         deleteProject.delete()
         return redirect('projects:project_list')
-    return render(request, 'delete_project.html', {'delete_projects': deleteProject})
+    return render(request, 'projects/delete_project.html', {'delete_projects': deleteProject})
+
 
 class ProjectDetails(DetailView):
     model = Project
     query_pk_and_slug = True
     slug_field = 'title'
-    template_name = 'project_detail.html'
+    template_name = 'projects/project_detail.html'
 
 
 @unauthenticated_user

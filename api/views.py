@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from rest_framework import status
+
 from api.serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -14,17 +16,27 @@ def program_add_api(request):
     serializer = ProgramSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+    return Response(serializer.data,status=status.HTTP_201_CREATED)
+    # if request.method == "POST":
+    #     serializer = ProgramSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
 def program_list(request):
     """
-    API view function for List all program.
+    API view function for List  out all program.
     """
-    programs = Program.objects.all()
-    serializer = ProgramSerializer(programs, many=True)
-    return Response(serializer.data)
+    try:
+        programs = Program.objects.all()
+    except Program.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == "GET":
+        serializer = ProgramSerializer(programs, many=True)
+        return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -35,6 +47,23 @@ def program_detail_api(request, pk):
     program = Program.objects.get(id=pk)
     serializer = ProgramSerializer(program, many=False)
     return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def delete_program_api(request, pk):
+    try:
+        program = Program.objects.get(id=pk)
+    except Program.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == "DELETE":
+        operation = program.delete()
+        data = {}
+        if operation:
+            data["Delete"] = "Successful"
+
+        else:
+            data["Delete"] = "Failed"
+        return Response(data=data)
 
 
 @api_view(['POST'])
