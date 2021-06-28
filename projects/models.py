@@ -24,7 +24,8 @@ class Supervisor(models.Model):
 
 class Task(models.Model):
     title = models.CharField(max_length=200)
-    is_complete=models.BooleanField(default=False)
+    is_complete = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
 
@@ -54,9 +55,9 @@ class Member(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=500,null=True)
-    start_date = models.DateField(auto_now_add=False)
-    end_date = models.DateField(auto_now_add=False)
+    description = models.TextField(max_length=500, null=True)
+    start_date = models.DateField(auto_now_add=False, help_text='YYYY-MM-DD')
+    end_date = models.DateField(auto_now_add=False, help_text='YYYY-MM-DD')
     # task = models.ManyToManyField(Task)
     member = models.ManyToManyField(Member)
     supervisor = models.ManyToManyField(Supervisor)

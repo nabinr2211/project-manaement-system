@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
-
+from django.contrib import messages
 from projects.decorators import unauthenticated_user, allowed_user
 from projects.forms import *
 from django.contrib.auth import authenticate, login, logout
