@@ -1,5 +1,6 @@
 from django.db import models
 from phone_field import PhoneField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -13,6 +14,7 @@ class Program(models.Model):
 
 
 class Supervisor(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone = PhoneField(unique=True)
@@ -22,14 +24,8 @@ class Supervisor(models.Model):
         return self.name
 
 
-class Task(models.Model):
-    title = models.CharField(max_length=200)
-    is_complete=models.BooleanField(default=False)
-    def __str__(self):
-        return self.title
-
-
 class Member(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     semester = (
         ('1st Sem', '1st sem'),
         ('2nd Sem', '2nd sem'),
@@ -46,15 +42,25 @@ class Member(models.Model):
     email = models.EmailField(unique=True)
     phone = PhoneField()
     semester = models.CharField(max_length=100, choices=semester)
-    task = models.ManyToManyField(Task)
+
+    # task = models.ManyToManyField(Task)
 
     def __str__(self):
         return self.name
 
 
+class Task(models.Model):
+    title = models.CharField(max_length=200)
+    # is_complete = models.BooleanField(default=False)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
 class Project(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField(max_length=500,null=True)
+    description = models.TextField(max_length=500, null=True)
     start_date = models.DateField(auto_now_add=False)
     end_date = models.DateField(auto_now_add=False)
     # task = models.ManyToManyField(Task)

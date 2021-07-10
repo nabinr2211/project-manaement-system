@@ -13,19 +13,18 @@ class Program(admin.ModelAdmin):
 
 @admin.register(Supervisor)
 class Supervisor(admin.ModelAdmin):
-    list_display = ['name','email','phone','position']
+    list_display = ['name', 'email', 'phone', 'position']
     list_filter = ('position',)
 
 
-@admin.register(Task)
-class Task(admin.ModelAdmin):
-    list_display = ['title']
-
-
+# @admin.register(Task)
+class Task(admin.TabularInline):
+    model = Task
 
 
 @admin.register(Member)
 class Member(admin.ModelAdmin):
+    inlines = [Task,]
     list_display = ['name', 'symbol_no', 'program', 'email', 'phone', 'semester', ]
 
     search_fields = ('name',)
@@ -43,4 +42,4 @@ class Project(admin.ModelAdmin):
         return format_html('<br/>'.join([p.name for p in obj.member.all()]))
 
     search_fields = ('title',)
-    list_filter = ('title','supervisor')
+    list_filter = ('title', 'supervisor')

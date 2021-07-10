@@ -1,0 +1,151 @@
+{%extends 'base.html'%}
+{%block content%}
+{% include 'navbar.html'%}
+<div class="breadcrumbs my-2">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="{% url 'projects:project_list'%}">Projects</a></li>
+                            <li class="active">Project Details</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="animated fadeIn  mt-5">
+
+        <div class="ui-typography">
+            <div class="row">
+                <div class="col-md-10 offset-1">
+
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title" v-if="headerText">Project Details</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="typo-headers">
+                                <h1 class="pb-2 display-4">{{object.title|title}}</h1>
+                            </div>
+                            <div class="typo-articles">
+                                <p>
+                                    {{object.description}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row  mx-3">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="stat-widget-one">
+                                            <div class="stat-icon dib"><i
+                                                    class="fa fa-play-circle-o text-success border-success"></i></div>
+                                            <div class="stat-content dib">
+                                                <div class="stat-text">Starting Date</div>
+                                                <div class="stat-digit">{{object.start_date}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="stat-widget-one">
+                                            <div class="stat-icon dib"><i
+                                                    class="fa fa-stop text-primary border-primary"></i></div>
+                                            <div class="stat-content dib">
+                                                <div class="stat-text">Ending Date</div>
+                                                <div class="stat-digit">{{object.end_date}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mx-3">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="stat-widget-four">
+                                            <div class="stat-icon dib">
+                                                <i class="ti-user text-muted"></i>
+                                            </div>
+                                            <div class="stat-content">
+                                                <div class="text-left dib">
+                                                    <div class="stat-heading">Supervisor</div>
+                                                    <div class="stat-text">
+                                                        {%for supervisor in object.supervisor.all%}
+                                                       - {{supervisor.name|title}}<br>
+                                                        {%endfor%}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mx-3 mb-5">
+                            {%for member in object.member.all%}
+                            <div class="col-md-4">
+                                <aside class="profile-nav alt">
+                                    <section class="card">
+                                        <div class="card-header user-header alt bg-dark">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h2 class="text-light display-6">
+                                                        {{member.name|title}}<br>
+                                                    </h2>
+                                                    <p>{{member.symbol_no}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <ul class="list-group list-group-flush">
+                                            {%for task in member.task.all%}
+                                            <li class="list-group-item">{{task.title|capfirst}}
+                                                {% if task.is_complete %}
+
+                                                <span class="badge badge-primary pull-right">Completed</span>
+                                                {% else %}
+                                                <span class="badge badge-warning pull-right">Remaining</span>
+                                                {%endif%}
+                                            </li>
+                                            {%endfor%}
+                                        </ul>
+
+                                    </section>
+                                </aside>
+                            </div>
+                            {%endfor%}
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% endblock%}

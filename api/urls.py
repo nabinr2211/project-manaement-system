@@ -1,8 +1,14 @@
+import djoser
+
 from api import views
-from django.urls import path
+from django.urls import path, include
 
 app_name = 'api'
 urlpatterns = [
+
+    # djoser auth url
+    path('', include('djoser.urls')),
+    path('', include('djoser.urls.authtoken')),
 
     # urls for program...
     path('program-list/', views.program_list, name='api_program_list'),
