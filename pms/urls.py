@@ -22,11 +22,11 @@ from projects import urls as project_url
 from api import urls as api_url
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('projects/', include(project_url)),
+    # path('projects/', include(project_url)),
     path('api/', include(api_url)),
-    path('', views.dashboard, name='dashboard'),
+    # path('', views.dashboard, name='dashboard'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 admin.site.site_header = "PMS"
